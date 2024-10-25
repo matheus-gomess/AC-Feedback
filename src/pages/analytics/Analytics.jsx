@@ -4,7 +4,6 @@ import {
   Text,
   Input,
   Select,
-  useColorMode,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { printQuestionSet } from "services/questionsSet";
@@ -27,7 +26,6 @@ export default function Analytics() {
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
   const [average, setAverage] = useState();
-  const { colorMode } = useColorMode();
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -182,6 +180,7 @@ export default function Analytics() {
             />
             <BoxAverage
               average={average + " de " + groupSelected?.numberOfStars}
+              description={"Média de todas as notas do grupo"}
             />
             <BoxInfoLists
               users={users}

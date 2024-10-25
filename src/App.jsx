@@ -13,7 +13,8 @@ import "./index.css";
 import Register from "pages/register/register";
 import { getUser } from "storage/get-user";
 import { useLocation } from "react-router-dom";
-import AnalyticsUserSelect from "pages/analyticsUserSelect";
+import AnalyticsUserSelect from "pages/analytics/analyticsUserSelect";
+import ScrollToTop from "components/ScrollToTop";
 
 function App() {
   const { colorMode } = useColorMode();
@@ -28,27 +29,28 @@ function App() {
         maxWidth: "100vw",
       }}
     >
-        {location.pathname !== "/" || location.pathname !== "/register"
-          ? getUser() && <Header />
-          : null}
+      {location.pathname !== "/" || location.pathname !== "/register"
+        ? getUser() && <Header />
+        : null}
 
-        <Routes>
-          <Route path="/" element={<Authentication />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/home/rate" element={<RateChooseUser />} />
-          <Route
-            path="/rate-participant/:participant"
-            element={<RateParticipantScreen />}
-          />
-          <Route path="/home/feedbacks" element={<Feedbacks />} />
-          <Route path="/home/settings" element={<Settings />} />
-          <Route path="/home/analytics" element={<Analytics />} />
-          <Route path="/home/analytics/:user" element={<AnalyticsUserSelect />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-
+      <Routes>
+        <Route path="/" element={<Authentication />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/home/rate" element={<RateChooseUser />} />
+        <Route
+          path="/rate-participant/:participant"
+          element={<RateParticipantScreen />}
+        />
+        <Route path="/home/feedbacks" element={<Feedbacks />} />
+        <Route path="/home/settings" element={<Settings />} />
+        <Route path="/home/analytics" element={<Analytics />} />
+        <Route path="/home/analytics/:user" element={<AnalyticsUserSelect />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+      <ScrollToTop />
       <ToastContainer
-        position="top-center"
+        position="top-right"
+        style={{ top:"100px" }}
         pauseOnHover={false}
         theme={colorMode === "dark" ? "dark" : "light"}
         progressStyle={{ background: "#ff0000" }}

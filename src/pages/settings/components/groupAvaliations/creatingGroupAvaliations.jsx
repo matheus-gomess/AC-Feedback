@@ -60,6 +60,11 @@ export default function CreatingGroupAvaliations() {
                 questionSetName: nameGroupValue,
                 questions: [
                     {
+                        "questionName": "Primeira Pergunta",
+                        "questionType": "RATING",
+                        "questionDescription": "Descrição da pergunta 1"
+                    },
+                    {
                         "questionName": "Observações",
                         "questionType": "OBSERVATION",
                         "questionDescription": "Coloque uma observação para poder enviar o formulário"

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   Container,
   Heading,
@@ -10,7 +9,7 @@ import {
   Icon
 } from "@chakra-ui/react";
 import SubmittedAvaliation from "../rate/components/submittedAvaliations";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import ModalFilter from "./components/modalFilter";
 import ModalGroupSelect from "./components/modalGroupSelect";
 import { CalendarIcon } from "@chakra-ui/icons";
@@ -37,6 +36,7 @@ export default function Feedbacks() {
   const [selectUserReceived, setSelectUserReceived] = useState("");
   const [selectedUserReviewed, setSelectedUserReviewed] = useState("");
   const [newSelectedGroup, setNewSelectedGroup] = useState("");
+  const initializeRef = useRef(false);
 
   //Gradiente das cores nos temas
   const colorGradientBackGround =
@@ -108,8 +108,7 @@ export default function Feedbacks() {
     }
   };
 
-  useEffect(() => {
-    const initializeData = async () => {
+const initializeData = async () => {
       try {
         await fetchData();
         await findParticipants();
@@ -120,8 +119,11 @@ export default function Feedbacks() {
         console.log(error);
       }
     };
-    initializeData();
-  }, [user.name]);
+  
+    if (!initializeRef.current) {
+      initializeData();
+      initializeRef.current = true; // Marcar como executado
+    }
 
   //Função controlando a fechura do filtro de grupos
   const handleCloseGroupFilter = () => {

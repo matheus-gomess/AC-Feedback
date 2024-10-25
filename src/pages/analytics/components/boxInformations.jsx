@@ -1,4 +1,12 @@
-import { Box, Text, Container, useColorMode, Flex, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Container,
+  useColorMode,
+  Flex,
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { formattingName } from "utils/formattingTexts";
 
@@ -15,20 +23,33 @@ export function BoxInfoNumbers({ title, number, detailText }) {
       border="1px solid"
       borderColor={colorMode === "dark" ? "transparent" : "black"}
     >
-      <Text fontSize="1.1rem" textColor={colorMode === "dark" ? "white" : "black"} fontWeight="500" marginBottom="10px">
+      <Text
+        fontSize="1.1rem"
+        textColor={colorMode === "dark" ? "white" : "black"}
+        fontWeight="500"
+        marginBottom="10px"
+      >
         {title}
       </Text>
-      <Text fontSize="3rem" textColor={colorMode === "dark" ? "white" : "black"} fontWeight="bold">
+      <Text
+        fontSize="3rem"
+        textColor={colorMode === "dark" ? "white" : "black"}
+        fontWeight="bold"
+      >
         {number}
       </Text>
-      <Text fontSize="1.1rem" textColor={colorMode === "dark" ? "white" : "black"} fontWeight="500">
+      <Text
+        fontSize="1.1rem"
+        textColor={colorMode === "dark" ? "white" : "black"}
+        fontWeight="500"
+      >
         {detailText}
       </Text>
     </Box>
   );
 }
 
-export function BoxAverage({ average }) {
+export function BoxAverage({ average, description }) {
   const { colorMode } = useColorMode();
 
   return (
@@ -56,7 +77,7 @@ export function BoxAverage({ average }) {
           fontWeight="500"
           textColor={colorMode === "dark" ? "white" : "black"}
         >
-          Média de todas as notas do grupo
+          {description}
         </Text>
       </Box>
     </>
@@ -68,7 +89,6 @@ export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
   const navigate = useNavigate();
 
   const handleUserClick = (user) => {
-    // Navega para a página do usuário clicado, passando o user, filtredFeedbacks, e groupSelected
     navigate(`/home/analytics/${user}`, {
       state: {
         user,
@@ -106,29 +126,39 @@ export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
         minWidth="100%"
         borderRadius="12px"
       >
-        {users?.map((user) => (
-          <Flex
-            justifyContent="space-between"
-            fontSize="18px"
-            key={user.id}
-            padding="5px 0"
-            borderBottom="1px solid"
-            borderColor={colorMode === "dark" ? "#3a3f4a" : "#ccc"}
+        {users.length > 0 ? (
+          users.map((user) => (
+            <Flex
+              justifyContent="space-between"
+              fontSize="18px"
+              key={user.id}
+              padding="5px 0"
+              borderBottom="1px solid"
+              borderColor={colorMode === "dark" ? "#3a3f4a" : "#ccc"}
+            >
+              <Box>
+                <Button
+                  variant="link"
+                  color={colorMode === "dark" ? "white" : "black"}
+                  onClick={() => handleUserClick(user)}
+                >
+                  {formattingName(user)}
+                </Button>
+              </Box>
+              <Box>{user.solved}</Box>
+            </Flex>
+          ))
+        ) : (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="166px"
           >
-            <Box>
-              <Button
-                variant="link"
-                color={colorMode === "dark" ? "white" : "black"}
-                onClick={() => handleUserClick(user)}
-              >
-                {formattingName(user)}
-              </Button>
-            </Box>
-            <Box>
-              {user.solved}
-            </Box>
-          </Flex>
-        ))}
+            <Heading color="#808080">Nenhum usuário avaliado</Heading>
+          </Box>
+        )}
+        {}
       </Container>
     </Container>
   );
