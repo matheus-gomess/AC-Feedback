@@ -49,13 +49,15 @@ function App() {
       </Routes>
       <ScrollToTop />
       <ToastContainer
-        position="top-right"
-        style={{ top:"100px" }}
+        style={{ marginTop:"10vh" }}
+        position="top-center"
         pauseOnHover={false}
         theme={colorMode === "dark" ? "dark" : "light"}
         progressStyle={{ background: "#ff0000" }}
         limit={2}
         autoClose={2500}
+        closeOnClick={true}
+        closeButton={false}
       />
     </div>
   );

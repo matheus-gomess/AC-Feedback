@@ -176,7 +176,7 @@ function AnalyticsUserSelect() {
                 detailText={"Feedbacks"}
               />
               <BoxAverage
-                average={average + " de " + 5}
+                average={average + " de " + groupSelected?.numberOfStars}
                 description={`Média das notas de ${formattingFirstName(
                   matchedUser?.name
                 )}`}
@@ -198,7 +198,7 @@ function AnalyticsUserSelect() {
             display="grid"
             gridTemplateColumns="repeat(2, 2fr)"
           >
-            <CartesianChart />
+            <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={userFeedbacks}/>
             <Container marginRight="60px">
               <Container
                 bgColor="#2b3442"

@@ -1,92 +1,83 @@
 import {
-  LineChart,
+  ComposedChart,
   Line,
+  Area,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useColorMode } from "@chakra-ui/react";
+import { Box, Heading, useColorMode } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { format, parseISO } from "date-fns";
 
-export default function CartesianChart() {
+export default function CartesianChart({ notes, feedbacks }) {
   const { colorMode } = useColorMode();
-  const data = [
-    {
-      name: "Sprint 1",
-      uv: 400,
-      pv: 240,
-      amt: 2400,
-    },
-    {
-      name: "Sprint 2",
-      uv: 300,
-      pv: 138,
-      amt: 220,
-    },
-    {
-      name: "Sprint 3",
-      uv: 200,
-      pv: 480,
-      amt: 229,
-    },
-    {
-      name: "Sprint 4",
-      uv: 278,
-      pv: 528,
-      amt: 200,
-    },
-    {
-      name: "Sprint 5",
-      uv: 189,
-      pv: 400,
-      amt: 218,
-    },
-    {
-      name: "Sprint 6",
-      uv: 239,
-      pv: 380,
-      amt: 250,
-    },
-    {
-      name: "Sprint 7",
-      uv: 349,
-      pv: 430,
-      amt: 210,
-    },
-  ];
+  const [groupedFeedbacks, setGroupedFeedbacks] = useState([]);
 
-  return (
+  useEffect(() => {
+    const grouped = feedbacks.reduce((acc, feedback) => {
+      const date = feedback.date.split("T")[0]; // Extrai a data
+
+      // Inicializa os valores para a data se não existirem
+      if (!acc[date]) {
+        acc[date] = { total: 0, count: 0 };
+      }
+
+      // Extrai as avaliações e atualiza a soma e a contagem
+      feedback.questions.forEach((question) => {
+        if (question.rating) {
+          // Verifica se a avaliação existe
+          acc[date].total += question.rating;
+          acc[date].count += 1;
+        }
+      });
+
+      return acc;
+    }, {});
+
+    // Converte o objeto em um array com médias
+    const averages = Object.keys(grouped).map((date) => ({
+      name: format(parseISO(date), "dd/MM/yy"),
+      Ideal: notes,
+      Notas: grouped[date].count
+        ? grouped[date].total / grouped[date].count
+        : 0,
+      date: (date), // Adiciona a data original para ordenação
+    }));
+
+    setGroupedFeedbacks(averages);
+    console.log(averages);
+  }, [feedbacks]);
+
+  const ticks = Array.from({ length: notes + 1 }, (_, i) => i);
+
+  return groupedFeedbacks.length > 0 ? (
     <ResponsiveContainer width="120%" height="100%">
-      <LineChart
+      <ComposedChart
         width={500}
         height={200}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
+        data={groupedFeedbacks.sort((a, b) => new Date(a.date) - new Date(b.date))}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#971520"
-          activeDot={{ r: 8 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="uv"
+        <XAxis
+          dataKey="name"
           stroke={colorMode === "dark" ? "white" : "black"}
         />
-      </LineChart>
+        <YAxis
+          stroke={colorMode === "dark" ? "white" : "black"}
+          domain={[0, notes]}
+          ticks={ticks}
+        />
+        <Tooltip />
+        <Legend />
+        <Area dataKey="Notas" fill="#0078d4" stroke="#0078d4" />
+        <Line dataKey="Ideal" stroke="#9d9d9d" />
+      </ComposedChart>
     </ResponsiveContainer>
+  ) : (
+    <Box width="120%" display="flex" justifyContent="center">
+      <Heading color="#808080">Nenhum gráfico construído</Heading>
+    </Box>
   );
 }

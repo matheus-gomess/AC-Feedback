@@ -196,7 +196,7 @@ export default function Analytics() {
             display="grid"
             gridTemplateColumns="repeat(2, 2fr)"
           >
-            <CartesianChart />
+            <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
             <Container marginRight="60px">
               <Container
                 bgColor="#2b3442"
