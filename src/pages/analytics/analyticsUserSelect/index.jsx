@@ -236,7 +236,7 @@ function AnalyticsUserSelect() {
               paddingRight="15px"
               marginBottom="15px"
             >
-              <Heading>Comentários:</Heading>
+              <Heading>Comentários para {formattingFirstName(matchedUser?.name)}:</Heading>
             </Container>
             <Container minWidth="100%" minHeight="90%" gap="20px">
               <BoxObservations feedbacks={userFeedbacks} />

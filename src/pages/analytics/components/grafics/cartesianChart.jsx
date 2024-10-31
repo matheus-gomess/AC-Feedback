@@ -12,6 +12,19 @@ import { Box, Heading, useColorMode } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { format, parseISO } from "date-fns";
 
+const CustomTooltip = ({ active, payload, label }) => {
+  const { colorMode } = useColorMode();
+  if (active && payload) {
+    return (
+      <div style={{ backgroundColor: "transparent", padding: "10px", border: colorMode === "dark" ? "1px solid white" : "1px solid black" }}>
+        <p>{`${label}`}</p>
+        <p>{`Média: ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function CartesianChart({ notes, feedbacks }) {
   const { colorMode } = useColorMode();
   const [groupedFeedbacks, setGroupedFeedbacks] = useState([]);
@@ -48,8 +61,7 @@ export default function CartesianChart({ notes, feedbacks }) {
     }));
 
     setGroupedFeedbacks(averages);
-    console.log(averages);
-  }, [feedbacks]);
+  }, [feedbacks, notes]);
 
   const ticks = Array.from({ length: notes + 1 }, (_, i) => i);
 
@@ -69,7 +81,7 @@ export default function CartesianChart({ notes, feedbacks }) {
           domain={[0, notes]}
           ticks={ticks}
         />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />}/>
         <Legend />
         <Area dataKey="Notas" fill="#0078d4" stroke="#0078d4" />
         <Line dataKey="Ideal" stroke="#9d9d9d" />
