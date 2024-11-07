@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, Button, Text, ModalBody, Heading, ModalFooter, Flex, Container, Tooltip, Input, Select, useColorMode } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, Button, Text, ModalBody, Heading, ModalFooter, Flex, Container, Tooltip, Input, Select, useColorMode, Box } from "@chakra-ui/react";
 import { formattingName, APIformattingName } from "utils/formattingTexts";
 import { CheckIcon } from "@chakra-ui/icons";
 import { FaUserEdit, FaUserSlash } from "react-icons/fa";
@@ -162,10 +162,7 @@ export default function ModalEditingLogParticipant({ isOpenEditParticipantSelect
                     <ModalHeader display="flex" alignItems="center" justifyContent="space-between"><Heading>Aviso!</Heading><RiAlertFill size="36px" />
                     </ModalHeader>
                     <ModalBody>
-                        Você tem certeza que deseja <Text as="span" textDecoration="underline" textDecorationColor="red">excluir esse usuário</Text>?
-                        <Text mt={4} color="red">
-                            <strong>Você perderá todas as avaliações referentes a este usuário!</strong>
-                        </Text>
+                        <Text fontSize="22px">Você tem certeza que deseja <Box as="span" textDecoration="underline" textDecorationColor="red">excluir o usuário {formattingName(infoSelectedParticipant?.name)}</Box>?</Text>
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={() => participantId && deleteParticipantSelected(participantId)} colorScheme="red" color="white">

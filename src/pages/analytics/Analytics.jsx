@@ -14,9 +14,10 @@ import {
   BoxInfoLists,
   BoxInfoNumbers,
 } from "./components/boxInformations";
-import PieGrafics from "./components/grafics/pieChart";
 import CartesianChart from "./components/grafics/cartesianChart";
 import BoxObservations from "./components/boxObservations";
+import AverageUsers from "./components/grafics/averageUsers";
+import AverageQuestions from "./components/grafics/averageQuestions";
 
 export default function Analytics() {
   const [groupSelected, setGroupSelected] = useState(null);
@@ -56,9 +57,9 @@ export default function Analytics() {
   }, []);
 
   useEffect(() => {
-    if (groupSelected && allFeedbacks.length > 0) {
+    if (groupSelected && allFeedbacks.length >= 0) {
       const filtring = allFeedbacks.filter(
-        (feedback) => feedback.questionSetName === groupSelected.questionSetName
+        (feedback) => groupSelected.questionSetName === feedback.questionSetName
       );
       setFiltredFeedbacks(filtring);
 
@@ -189,8 +190,9 @@ export default function Analytics() {
             />
           </Container>
           <Container
-            marginTop="30px"
+            marginTop="15px"
             minWidth="100%"
+            minHeight="367px"
             padding="0px"
             alignItems="center"
             display="grid"
@@ -198,32 +200,15 @@ export default function Analytics() {
           >
             <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
             <Container marginRight="60px">
-              <Container
-                bgColor="#2b3442"
-                borderRadius="10px"
-                padding="20px"
-                mb="30px"
-                display="flex"
-              >
-                <PieGrafics />
-                <Heading color="white">Gráfico 1</Heading>
-              </Container>
-              <Container
-                bgColor="#2b3442"
-                borderRadius="10px"
-                padding="20px"
-                display="flex"
-              >
-                <PieGrafics />
-                <Heading color="white">Gráfico 2</Heading>
-              </Container>
+              <AverageQuestions feedbacks={filtredFeedbacks}/>
+              <AverageUsers notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
             </Container>
           </Container>
           <Container
             minWidth="100%"
             height="fit-content"
             padding="0px"
-            marginTop="45px"
+            marginTop="15px"
             marginBottom="20px"
           >
             <Container
@@ -231,8 +216,6 @@ export default function Analytics() {
               maxHeight="fit-content"
               padding="0px"
               paddingLeft="15px"
-              paddingRight="15px"
-              marginBottom="15px"
             >
               <Heading>Comentários:</Heading>
             </Container>

@@ -45,7 +45,7 @@ export default function Home() {
         display: "flex",
         minHeight: "90vh",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       {verifyAdm ? (

@@ -17,7 +17,6 @@ import {
   BoxInfoNumbers,
 } from "pages/analytics/components/boxInformations";
 import CartesianChart from "../components/grafics/cartesianChart";
-import PieGrafics from "../components/grafics/pieChart";
 import BoxObservations from "../components/boxObservations";
 
 function AnalyticsUserSelect() {
@@ -48,7 +47,7 @@ function AnalyticsUserSelect() {
     try {
       const response = await listAllUsers();
       const foundUser = response.find(
-        (participant) => user === participant.name
+        (participant) => participant.name === user
       );
       if (foundUser) {
         setMatchedUser(foundUser);
@@ -191,8 +190,9 @@ function AnalyticsUserSelect() {
             </>
           </Container>
           <Container
-            marginTop="30px"
+            marginTop="15px"
             minWidth="100%"
+            minHeight="367px"
             padding="0px"
             alignItems="center"
             display="grid"
@@ -203,20 +203,20 @@ function AnalyticsUserSelect() {
               <Container
                 bgColor="#2b3442"
                 borderRadius="10px"
+                minHeight="200px"
                 padding="20px"
                 mb="30px"
                 display="flex"
               >
-                <PieGrafics />
                 <Heading color="white">Gráfico 1</Heading>
               </Container>
               <Container
                 bgColor="#2b3442"
                 borderRadius="10px"
+                minHeight="233px"
                 padding="20px"
                 display="flex"
               >
-                <PieGrafics />
                 <Heading color="white">Gráfico 2</Heading>
               </Container>
             </Container>
@@ -234,6 +234,7 @@ function AnalyticsUserSelect() {
               padding="0px"
               paddingLeft="15px"
               paddingRight="15px"
+              marginTop="50px"
               marginBottom="15px"
             >
               <Heading>Comentários para {formattingFirstName(matchedUser?.name)}:</Heading>

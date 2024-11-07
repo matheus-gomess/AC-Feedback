@@ -17,8 +17,9 @@ export function BoxInfoNumbers({ title, number, detailText }) {
     <Box
       bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
       color="white"
-      padding="20px"
+      padding="15px"
       borderRadius="10px"
+      maxHeight="212px"
       width="200px"
       border="1px solid"
       borderColor={colorMode === "dark" ? "transparent" : "black"}
@@ -97,7 +98,7 @@ export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
       },
     });
   };
-
+  
   return (
     <Container
       bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
@@ -131,7 +132,7 @@ export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
             <Flex
               justifyContent="space-between"
               fontSize="18px"
-              key={user.id}
+              key={user}
               padding="5px 0"
               borderBottom="1px solid"
               borderColor={colorMode === "dark" ? "#3a3f4a" : "#ccc"}

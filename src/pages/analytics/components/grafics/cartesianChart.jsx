@@ -83,7 +83,7 @@ export default function CartesianChart({ notes, feedbacks }) {
         />
         <Tooltip content={<CustomTooltip />}/>
         <Legend />
-        <Area dataKey="Notas" fill="#0078d4" stroke="#0078d4" />
+        <Area dataKey="Notas" fill="#86111c" stroke="#971520" />
         <Line dataKey="Ideal" stroke="#9d9d9d" />
       </ComposedChart>
     </ResponsiveContainer>
