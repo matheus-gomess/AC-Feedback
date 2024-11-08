@@ -54,7 +54,7 @@ export default function Authentication() {
         gridTemplateRows="1fr"
         padding="0px"
         maxW="100%"
-        h="100vh"
+        h="90vh"
       >
         <Container
           display="flex"
@@ -72,12 +72,12 @@ export default function Authentication() {
             fontWeight="bold"
             color={colorMode === "dark" ? "white" : "black"}
           >
-            Acesse sua conta para começar a avaliar os membros da sua equipe
+            Acesse sua conta para começar a avaliar os membros da sua equipe!
           </Text>
         </Container>
         <Container display="flex" justifyContent="center" alignItems="center">
           <Container
-            bg={colorMode === "dark" ? "white" : "#1c222b"}
+            bg={colorMode === "dark" ? "white" : "#1a202c"}
             maxH="500px"
             maxW="500px"
             padding="50px"
@@ -140,7 +140,7 @@ export default function Authentication() {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Text color={colorMode === "dark" ? "#1c222b" : "white"}>
+                  <Text color={colorMode === "dark" ? "#1a202c" : "white"}>
                     Você não possui uma conta?
                   </Text>
                   <Button

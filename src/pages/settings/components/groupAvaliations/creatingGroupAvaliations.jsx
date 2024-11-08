@@ -24,15 +24,13 @@ import {
 } from "services/questionsSet";
 import { StarsNumberOfStars } from "components/Stars";
 
-export default function CreatingGroupAvaliations() {
+export default function CreatingGroupAvaliations({ nameGroupValue, setNameGroupValue, showInputGroup, setShowInputGroup }) {
   const { colorMode } = useColorMode();
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
   const [selectedGroupValue, setSelectedGroupValue] = useState(null);
-  const [nameGroupValue, setNameGroupValue] = useState("");
   const [questionsInput, setQuestionsInput] = useState([]);
-  const [showInputGroup, setShowInputGroup] = useState(false);
   const [showADDQuestionsInput, setShowADDQuestionsInput] = useState(false);
   const [inputQuestionsValue, setInputQuestionsValue] = useState("");
   const [questionsSet, setQuestionsSet] = useState();
@@ -212,35 +210,18 @@ export default function CreatingGroupAvaliations() {
 
   return (
     <>
-      <Button
-        _hover={{}}
-        _active={{ bgColor: "#acacac" }}
-        bgColor={colorMode === "dark" ? "#ffffff" : "#1c222b"}
-        onClick={() => {
-          setShowInputGroup(!showInputGroup);
-          showInputGroup === false && setNameGroupValue("");
-        }}
-        marginBottom="10px"
-      >
-        <Text
-          marginRight="10px"
-          color={colorMode === "dark" ? "#1c222b" : "#ffffff"}
-        >
-          Criar novo grupo de avaliações
-        </Text>
-      </Button>
       {showInputGroup && (
-        <InputGroup size="sm" marginBottom="15px">
+        <InputGroup marginBottom="15px">
           <Input
             placeholder="Digite aqui o nome do novo agrupamento de avaliações"
             marginBottom="10px"
             variant="flushed"
             _focus={{
               boxShadow: "none",
-              borderColor: colorMode === "dark" ? "#ffffff" : "#1c222b",
+              borderColor: colorMode === "dark" ? "#ffffff" : "#1a202c",
             }}
-            borderColor={colorMode === "dark" ? "#ffffff" : "#1c222b"}
-            color={colorMode === "dark" ? "#ffffff" : "#1c222b"}
+            borderColor={colorMode === "dark" ? "#ffffff" : "#1a202c"}
+            color={colorMode === "dark" ? "#ffffff" : "#1a202c"}
             value={nameGroupValue}
             onChange={(event) => setNameGroupValue(event.target.value)}
           />
@@ -252,7 +233,7 @@ export default function CreatingGroupAvaliations() {
             bg="none"
             border="none"
             borderBottom="1px solid"
-            borderColor={colorMode === "dark" ? "#ffffff" : "#1c222b"}
+            borderColor={colorMode === "dark" ? "#ffffff" : "#1a202c"}
             borderRadius="none"
           >
             <IconButton
@@ -264,15 +245,15 @@ export default function CreatingGroupAvaliations() {
               isDisabled={nameGroupValue === ""}
             >
               <CheckIcon
-                color={colorMode === "dark" ? "#ffffff" : "#1c222b"}
+                color={colorMode === "dark" ? "#ffffff" : "#1a202c"}
                 style={{
                   transition: "color 0.3s ease",
-                  color: colorMode === "dark" ? "#ffffff" : "#1c222b",
+                  color: colorMode === "dark" ? "#ffffff" : "#1a202c",
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.color = "green")}
                 onMouseOut={(e) =>
                   (e.currentTarget.style.color =
-                    colorMode === "dark" ? "white" : "#1c222b")
+                    colorMode === "dark" ? "white" : "#1a202c")
                 }
               />
             </IconButton>

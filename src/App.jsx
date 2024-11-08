@@ -27,8 +27,9 @@ function App() {
       style={{
         overflow: "hidden",
         fontFamily: "Montserrat, sans-serif",
-        minHeight: "100vh",
+        minHeight: "90vh",
         maxWidth: "100vw",
+        marginTop: "10vh",
       }}
     >
       {location.pathname !== "/" || location.pathname !== "/register"

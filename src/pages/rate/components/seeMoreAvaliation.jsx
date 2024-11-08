@@ -251,10 +251,10 @@ export default function SeeMoreAvaliation({
                       fontSize="20px"
                       height="200px"
                       marginTop="25px"
-                      borderColor={colorMode === "dark" ? "white" : "#1c222b"}
+                      borderColor={colorMode === "dark" ? "white" : "#1a202c"}
                       _hover={{}}
                       focusBorderColor={
-                        colorMode === "dark" ? "white" : "#1c222b"
+                        colorMode === "dark" ? "white" : "#1a202c"
                       }
                       overflow="hidden"
                       overflowY="auto"
@@ -314,7 +314,7 @@ export default function SeeMoreAvaliation({
                       max={filteredQuestionsRATING.length - 1}
                       borderRadius="20px"
                       colorScheme="red"
-                      bgColor={colorMode === "dark" ? "#ffffff" : "#1c222b"}
+                      bgColor={colorMode === "dark" ? "#ffffff" : "#1a202c"}
                       size="xs"
                       maxWidth="300px"
                     />

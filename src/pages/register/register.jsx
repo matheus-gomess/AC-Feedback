@@ -40,10 +40,10 @@ export default function Register() {
       justifyContent="center"
       alignItems="center"
       w="100vw"
-      h="100vh"
+      h="90vh"
     >
       <Container
-        bg={colorMode === "dark" ? "white" : "#1c222b"}
+        bg={colorMode === "dark" ? "white" : "#1a202c"}
         maxH="500px"
         maxW="500px"
         padding="50px"
@@ -54,7 +54,7 @@ export default function Register() {
       >
         <Box
           position="absolute"
-          color={colorMode === "dark" ? "#1c222b" : "white"}
+          color={colorMode === "dark" ? "#1a202c" : "white"}
           textDecoration="underline"
           _hover={{ cursor: "pointer", color: "#971520" }}
           onClick={() => nav("/")}
@@ -65,10 +65,10 @@ export default function Register() {
           <ArrowBackIcon /><strong>Voltar</strong>
         </Box>
         <Container display="flex" flexDir="column" textAlign="center">
-          <Text color={colorMode === "dark" ? "#1c222b" : "white"} fontWeight="bold" fontSize="2rem">
+          <Text color={colorMode === "dark" ? "#1a202c" : "white"} fontWeight="bold" fontSize="2rem">
             Registrar
           </Text>
-          <Text color={colorMode === "dark" ? "#1c222b" : "white"}>
+          <Text color={colorMode === "dark" ? "#1a202c" : "white"}>
             Insira os dados da sua conta para realizar o cadastro
           </Text>
         </Container>

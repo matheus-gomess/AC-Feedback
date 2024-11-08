@@ -35,7 +35,7 @@ export default function ButtonPages({ title, navigate, isActualRoute }) {
         _hover={{}}
         _active={{ bg: "rgba(0, 0, 0, 0.2)" }}
         css={{
-          color: isActualRoute ? "#700e17" : colorMode === "dark" ? "white" : "#1c222b",
+          color: isActualRoute ? "#700e17" : colorMode === "dark" ? "white" : "#1a202c",
           textTransform: "uppercase",
           padding: "0px",
           fontSize: "14pt",

@@ -9,14 +9,26 @@ import {
 import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
+import ModalForQuestion from "./modalForQuestion";
 
 export default function AverageQuestions({ feedbacks }) {
   const { colorMode } = useColorMode();
   const [averageRatingsByQuestion, setAverageRatingsByQuestion] = useState([]);
   const [progress, setProgress] = useState(100);
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [selectedQuestion, setSelectedQuestion] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sliderRef = useRef(null);
+
+  const handleOpen = (group) => {
+    setIsModalOpen(true);
+    setSelectedQuestion(group)
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setSelectedQuestion(null);
+  }
 
   useEffect(() => {
     const calculateAverageRatingsByQuestion = (feedbacks) => {
@@ -40,14 +52,13 @@ export default function AverageQuestions({ feedbacks }) {
       return Object.entries(questionRatings).map(
         ([questionName, { sum, count }]) => ({
           questionName,
-          averageRating: parseFloat((sum / count).toFixed(1)),
+          averageRating: parseFloat((sum / count).toFixed(2)),
         })
       );
     };
 
     const averages = calculateAverageRatingsByQuestion(feedbacks);
     setAverageRatingsByQuestion(averages);
-    console.log(averages);
   }, [feedbacks]);
 
   const autoplaySpeed = 9000;
@@ -73,7 +84,6 @@ export default function AverageQuestions({ feedbacks }) {
           display: "flex",
           justifyContent: "center",
           zIndex: 2,
-          color: "white",
         }}
       >
         <ul style={{ margin: 0 }}>{dots}</ul>
@@ -128,6 +138,10 @@ export default function AverageQuestions({ feedbacks }) {
               alignItems="center"
               minWidth="100%"
               position="relative"
+              onClick={() => {
+                handleOpen(question)
+              }}
+              cursor="pointer"
             >
               <Box textAlign="center">
                 <Heading>{question.questionName}</Heading>
@@ -140,7 +154,7 @@ export default function AverageQuestions({ feedbacks }) {
         {averageRatingsByQuestion.length > 1 ? (
           <>
             <IconButton
-              icon={<ChevronLeftIcon />}
+              icon={<ChevronLeftIcon fontSize={25} />}
               aria-label="Previous Slide"
               position="absolute"
               top="30%"
@@ -154,7 +168,7 @@ export default function AverageQuestions({ feedbacks }) {
               borderRadius="full"
             />
             <IconButton
-              icon={<ChevronRightIcon />}
+              icon={<ChevronRightIcon fontSize={25} />}
               aria-label="Next Slide"
               position="absolute"
               top="30%"
@@ -189,7 +203,7 @@ export default function AverageQuestions({ feedbacks }) {
 
         <style>{`
           .slick-dots li button:before {
-            color: white;
+            color: ${colorMode === "dark" ? "white" : "black"};
             opacity: 0.5;
           }
 
@@ -199,6 +213,7 @@ export default function AverageQuestions({ feedbacks }) {
           }
         `}</style>
       </Box>
+      <ModalForQuestion question={selectedQuestion} feedbacks={feedbacks} isOpen={isModalOpen} handleClose={handleClose}/>
     </Container>
   );
 }

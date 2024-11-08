@@ -18,14 +18,14 @@ export default function Inputs({ title, placeholder, type, value, onChange }) {
   return (
     <>
       <Container padding="0px">
-        <Text color={colorMode === "dark" ? "#1c222b" : "white"}>
+        <Text color={colorMode === "dark" ? "#1a202c" : "white"}>
           <strong>{title}:</strong>
         </Text>
         <InputGroup marginBottom="10px">
           <Input
-            color={colorMode === "dark" ? "#1c222b" : "white"}
+            color={colorMode === "dark" ? "#1a202c" : "white"}
             paddingY="20px"
-            border={colorMode === "dark" ? "1px solid #1c222b" : "1px solid white"}
+            border={colorMode === "dark" ? "1px solid #1a202c" : "1px solid white"}
             focusBorderColor="#971520"
             borderRadius="5px"
             bgColor="transparent"
@@ -48,9 +48,9 @@ export default function Inputs({ title, placeholder, type, value, onChange }) {
                 _hover={{ bg: "transparent" }}
               >
                 {showPassword ? (
-                  <ViewOffIcon color={colorMode === "dark" ? "#1c222b" : "white"} />
+                  <ViewOffIcon color={colorMode === "dark" ? "#1a202c" : "white"} />
                 ) : (
-                  <ViewIcon color={colorMode === "dark" ? "#1c222b" : "white"} />
+                  <ViewIcon color={colorMode === "dark" ? "#1a202c" : "white"} />
                 )}
               </Button>
             </InputRightElement>

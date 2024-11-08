@@ -203,7 +203,7 @@ export default function RateParticipantScreen() {
               borderRadius="20px"
               colorScheme="red"
               size="xs"
-              bgColor={colorMode === "dark" ? "#ffffff" : "#1c222b"}
+              bgColor={colorMode === "dark" ? "#ffffff" : "#1a202c"}
             />
           </Container>
         </Container>

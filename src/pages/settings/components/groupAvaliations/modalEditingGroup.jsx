@@ -160,8 +160,8 @@ export default function ModalEditingGroup({
                   isDisabled={selectedGroupValue?.writable === false}
                   _hover={{}}
                   _active={{ bgColor: "#acacac" }}
-                  color={colorMode === "dark" ? "#1c222b" : "white"}
-                  bgColor={colorMode === "dark" ? "white" : "#1c222b"}
+                  color={colorMode === "dark" ? "#1a202c" : "white"}
+                  bgColor={colorMode === "dark" ? "white" : "#1a202c"}
                   onClick={() => {
                     setShowADDQuestionsInput(!showADDQuestionsInput); showADDQuestionsInput === false && setInputQuestionsValue("");
                   }}
@@ -176,10 +176,10 @@ export default function ModalEditingGroup({
                     marginBottom="10px"
                     placeholder="Digite aqui o nome da nova pergunta"
                     variant="flushed"
-                    borderColor={colorMode === "dark" ? "white" : "#1c222b"}
+                    borderColor={colorMode === "dark" ? "white" : "#1a202c"}
                     _focus={{
                       boxShadow: "none",
-                      borderColor: colorMode === "dark" ? "white" : "#1c222b"
+                      borderColor: colorMode === "dark" ? "white" : "#1a202c"
                     }}
                     value={inputQuestionsValue}
                     onChange={(event) =>
@@ -194,7 +194,7 @@ export default function ModalEditingGroup({
                     bg="none"
                     border="none"
                     borderBottom="1px solid"
-                    borderColor={colorMode === "dark" ? "white" : "#1c222b"}
+                    borderColor={colorMode === "dark" ? "white" : "#1a202c"}
                     borderRadius="none"
                   >
                     <IconButton
@@ -207,14 +207,14 @@ export default function ModalEditingGroup({
                       <CheckIcon
                         style={{
                           transition: "color 0.3s ease",
-                          color: colorMode === "dark" ? "white" : "#1c222b"
+                          color: colorMode === "dark" ? "white" : "#1a202c"
                         }}
                         onMouseOver={(e) =>
                           (e.currentTarget.style.color = "green")
                         }
                         onMouseOut={(e) =>
                           (e.currentTarget.style.color =
-                            colorMode === "dark" ? "white" : "#1c222b")
+                            colorMode === "dark" ? "white" : "#1a202c")
                         }
                       />
                     </IconButton>
@@ -223,7 +223,7 @@ export default function ModalEditingGroup({
               )}
               <Container
                 borderLeft="1px solid"
-                borderLeftColor={colorMode === "dark" ? "white" : "#1c222b"}
+                borderLeftColor={colorMode === "dark" ? "white" : "#1a202c"}
                 marginTop="20px"
               >
                 <OrderedList width="100%">
@@ -233,7 +233,7 @@ export default function ModalEditingGroup({
                       <ListItem
                         key={index}
                         id="tasks"
-                        color={colorMode === "dark" ? "white" : "#1c222b"}
+                        color={colorMode === "dark" ? "white" : "#1a202c"}
                         marginBottom="10px"
                       >
                         <Text
@@ -248,7 +248,7 @@ export default function ModalEditingGroup({
                               ? "#777a80"
                               : colorMode === "dark"
                               ? "white"
-                              : "#1c222b"
+                              : "#1a202c"
                           }
                           userSelect="none"
                           onClick={() =>
@@ -346,8 +346,8 @@ export default function ModalEditingGroup({
             </Button>
             <Button
               onClick={handleModalRemoveClose}
-              bgColor={colorMode === "dark" ? "white" : "#1c222b"}
-              color={colorMode === "dark" ? "#1c222b" : "white"}
+              bgColor={colorMode === "dark" ? "white" : "#1a202c"}
+              color={colorMode === "dark" ? "#1a202c" : "white"}
               _hover={{}}
               _active={{}}
               ml={3}

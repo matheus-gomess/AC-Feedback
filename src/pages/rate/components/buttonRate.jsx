@@ -32,32 +32,32 @@ export default function ButtonRate({ currentQuestion, handleNextQuestion, handle
                 padding="0px"
                 isDisabled={currentQuestion === 0}
                 bg="transparent"
-                _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1c222b" }}
+                _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1a202c" }}
                 _active={{ bgColor: "#00000057" }}
                 onClick={handlePreviousQuestion}
             >
-                <ArrowLeftIcon color={colorMode === "dark" ? "white" : "#1c222b"} />
+                <ArrowLeftIcon color={colorMode === "dark" ? "white" : "#1a202c"} />
             </Button>
             {currentQuestion !== activatedGroup?.questions?.length - 1 && (rating === null || rating === 0) ?
                 <Button
                     padding="0px"
                     bg="transparent"
-                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1c222b", cursor: "not-allowed" }}
+                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1a202c", cursor: "not-allowed" }}
                     _active={{ bgColor: "#00000057" }}
                     onClick={() => toast.error("É necessário uma avaliação sobre este item")}
                     opacity="0.4"
                 >
-                    <ArrowRightIcon color={colorMode === "dark" ? "white" : "#1c222b"} />
+                    <ArrowRightIcon color={colorMode === "dark" ? "white" : "#1a202c"} />
                 </Button> :
                 <Button
                     padding="0px"
                     isDisabled={currentQuestion === activatedGroup?.questions?.length - 1}
                     bg="transparent"
-                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1c222b" }}
+                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1a202c" }}
                     _active={{ bgColor: "#00000057" }}
                     onClick={handleNextQuestion}
                 >
-                    <ArrowRightIcon color={colorMode === "dark" ? "white" : "#1c222b"} />
+                    <ArrowRightIcon color={colorMode === "dark" ? "white" : "#1a202c"} />
                 </Button>
             }
         </Container>

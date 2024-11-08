@@ -28,7 +28,6 @@ export default function AnalyticsUsers() {
     const [animation, setAnimation] = useState("entering");
     const [users, setUsers] = useState([]);
 
-    // Estilos para animação de fade-in e fade-out usando CSS
     const fadeStyles = {
         entering: { opacity: 1, transition: "opacity 0.25s ease-in" },
         exiting: { opacity: 0, transition: "opacity 0.25s ease-out" },
@@ -157,11 +156,11 @@ export default function AnalyticsUsers() {
                                 <Button
                                     padding="0px"
                                     bg="transparent"
-                                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1c222b" }}
+                                    _hover={{ border: "1px solid", borderColor: colorMode === "dark" ? "white" : "#1a202c" }}
                                     _active={{ bgColor: "#00000057" }}
                                     onClick={handleBackToUserList}
                                 >
-                                    <ArrowLeftIcon color={colorMode === "dark" ? "white" : "#1c222b"} />
+                                    <ArrowLeftIcon color={colorMode === "dark" ? "white" : "#1a202c"} />
                                 </Button>
                             }
                         </ModalFooter>

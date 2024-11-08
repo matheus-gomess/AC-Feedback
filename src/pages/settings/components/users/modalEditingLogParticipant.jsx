@@ -168,7 +168,7 @@ export default function ModalEditingLogParticipant({ isOpenEditParticipantSelect
                         <Button onClick={() => participantId && deleteParticipantSelected(participantId)} colorScheme="red" color="white">
                             Sim
                         </Button>
-                        <Button bgColor={colorMode === "dark" ? "white" : "#1c222b"} color={colorMode === "dark" ? "#1c222b" : "white"} _hover={{}} _active={{}} onClick={handleModalClose} ml={3}>
+                        <Button bgColor={colorMode === "dark" ? "white" : "#1a202c"} color={colorMode === "dark" ? "#1a202c" : "white"} _hover={{}} _active={{}} onClick={handleModalClose} ml={3}>
                             Não
                         </Button>
                     </ModalFooter>

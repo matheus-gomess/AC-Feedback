@@ -25,11 +25,11 @@ const theme = extendTheme({
   styles: {
     global: (props) => ({
       body: {
-        bg: props.colorMode === "dark" ? "#1c222b" : "#ffffff",
-        color: props.colorMode === "dark" ? "#ffffff" : "#1c222b",
+        bg: props.colorMode === "dark" ? "#1a202c" : "#ffffff",
+        color: props.colorMode === "dark" ? "#ffffff" : "#1a202c",
       },
       hr: {
-        borderColor: props.colorMode === "dark" ? "#ffffff" : "#1c222b",
+        borderColor: props.colorMode === "dark" ? "#ffffff" : "#1a202c",
       },
       ":root": {
         "--scrollbar-bg": props.colorMode === "light" ? "black" : "white",

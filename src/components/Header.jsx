@@ -45,11 +45,15 @@ function Header() {
           as="header"
           padding="20px"
           display="flex"
+          position="fixed"
+          top="0px"
+          bgColor={colorMode === "dark" ? "#1a202c" : "white"}
           justifyContent="space-between"
           maxH="10vh"
           borderBottom="1px"
           alignItems="center"
           w="100%"
+          zIndex="100"
         >
           <Container padding="0px" margin="0px" maxH="65px" maxW="294px">
             <Image

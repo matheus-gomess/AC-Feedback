@@ -9,7 +9,7 @@ export default function PrincipalSpinner() {
             width="75px"
             height="75px"
             speed="0.4s"
-            color={colorMode === "dark" ? "#700e17" : "#1c222b"}
+            color={colorMode === "dark" ? "#700e17" : "#1a202c"}
         />
     )
 }

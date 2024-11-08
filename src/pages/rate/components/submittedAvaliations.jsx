@@ -12,8 +12,8 @@ export default function SubmittedAvaliation({ avaliations, questionSets }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAvaliation, setSelectedAvaliation] = useState(null);
   const [questionSetSelected, setQuestionSetSelected] = useState();
-  const bgColor = useColorModeValue("#ffffff", "#1c222b");
-  const textColor = useColorModeValue("#1c222b", "#ffffff");
+  const bgColor = useColorModeValue("#ffffff", "#1a202c");
+  const textColor = useColorModeValue("#1a202c", "#ffffff");
 
   const checkIfIsHomeScreen = () => {
     return location.pathname === "/home";

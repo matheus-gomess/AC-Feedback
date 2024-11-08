@@ -41,7 +41,6 @@ export default function Home() {
       style={{
         height: "inherit",
         color: "white",
-        backgroundColor: "1c222b",
         display: "flex",
         minHeight: "90vh",
         justifyContent: "center",

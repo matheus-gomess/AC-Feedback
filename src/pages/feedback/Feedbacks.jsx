@@ -41,7 +41,7 @@ export default function Feedbacks() {
   //Gradiente das cores nos temas
   const colorGradientBackGround =
     colorMode === "dark"
-      ? "linear-gradient(to top, #1c222b, rgba(28, 34, 43, 0.85), rgba(28, 34, 43, 0.7), transparent)"
+      ? "linear-gradient(to top, #1a202c, rgba(26, 32, 44, 0.85), rgba(26, 32, 44, 0.7), transparent)"
       : "linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7), transparent)";
 
   async function findParticipants() {
@@ -160,7 +160,6 @@ const initializeData = async () => {
         height: "inherit",
         color: "white",
         minHeight: "90vh",
-        backgroundColor: "1c222b",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -170,12 +169,12 @@ const initializeData = async () => {
         <>
           <Button
             pos="absolute"
-            top="200px"
+            top="100px"
             onClick={() => setOpenGroupFilter(true)}
             background="transparent"
             border="1px solid"
-            borderColor={colorMode === "dark" ? "white" : "#1c222b"}
-            color={colorMode === "dark" ? "white" : "#1c222b"}
+            borderColor={colorMode === "dark" ? "white" : "#1a202c"}
+            color={colorMode === "dark" ? "white" : "#1a202c"}
             _hover={{}}
             _active={{ background: "rgba(0, 0, 0, 0.26)" }}
           >
