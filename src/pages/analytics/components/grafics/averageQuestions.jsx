@@ -11,7 +11,7 @@ import { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import ModalForQuestion from "./modalForQuestion";
 
-export default function AverageQuestions({ feedbacks }) {
+export default function AverageQuestions({ feedbacks, title }) {
   const { colorMode } = useColorMode();
   const [averageRatingsByQuestion, setAverageRatingsByQuestion] = useState([]);
   const [progress, setProgress] = useState(100);
@@ -89,7 +89,7 @@ export default function AverageQuestions({ feedbacks }) {
         <ul style={{ margin: 0 }}>{dots}</ul>
       </div>
     ),
-    beforeChange: (current, next) => {
+    beforeChange: (next) => {
       setTimeout(() => {
         setCurrentIndex(next);
       }, 700);
@@ -119,7 +119,7 @@ export default function AverageQuestions({ feedbacks }) {
       flexDirection="column"
     >
       <Text fontSize="1.4rem" mb="10px">
-        <strong>Média de notas por questão</strong>
+        <strong>{title}</strong>
       </Text>
 
       <Box

@@ -200,7 +200,7 @@ export default function Analytics() {
           >
             <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
             <Container marginRight="60px">
-              <AverageQuestions feedbacks={filtredFeedbacks}/>
+              <AverageQuestions feedbacks={filtredFeedbacks} title="Médias de notas por questão"/>
               <AverageUsers notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
             </Container>
           </Container>

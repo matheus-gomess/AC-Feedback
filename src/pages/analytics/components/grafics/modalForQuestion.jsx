@@ -85,7 +85,7 @@ export default function ModalForQuestion({
           padding={4}
           paddingBottom="5px"
         >
-          <Heading size="lg" color="white">
+          <Heading size="lg" color={colorMode === "dark" ? "white" : "black"}>
             Informações sobre a {listOrder}ª Questão
           </Heading>
           <IconButton
@@ -100,26 +100,45 @@ export default function ModalForQuestion({
             right={4}
           />
         </ModalHeader>
-        <Divider />
+        <Divider borderColor="" opacity="40%" />
         <ModalBody p={6}>
           <Box mb={6}>
-            <Heading size="md" mb={2} color="gray.100">
+            <Heading
+              size="md"
+              mb={2}
+              color={colorMode === "dark" ? "gray.100" : "gray.900"}
+            >
               Título da Pergunta:
             </Heading>
-            <Text fontSize="xl" fontWeight="bold" color="gray.100" mb={4}>
+            <Text
+              fontSize="xl"
+              fontWeight="bold"
+              color={colorMode === "dark" ? "gray.100" : "gray.900"}
+              mb={4}
+            >
               {question?.questionName}
             </Text>
             <Flex justify="space-between" align="center">
               <Box>
-                <Text fontSize="lg" color="gray.200">
+                <Text
+                  fontSize="lg"
+                  color={colorMode === "dark" ? "gray.200" : "gray.800"}
+                >
                   <strong>Média de Avaliação:</strong>
                 </Text>
-                <Text fontSize="xl" fontWeight="semibold" color="gray.200">
+                <Text
+                  fontSize="xl"
+                  fontWeight="semibold"
+                  color={colorMode === "dark" ? "gray.200" : "gray.800"}
+                >
                   {question?.averageRating}
                 </Text>
               </Box>
               <Box>
-                <Text fontSize="lg" color="gray.200">
+                <Text
+                  fontSize="lg"
+                  color={colorMode === "dark" ? "gray.200" : "gray.800"}
+                >
                   <strong>Grupo:</strong>
                 </Text>
                 <Tag colorScheme="teal" size="lg" fontWeight="bold">
@@ -128,7 +147,7 @@ export default function ModalForQuestion({
               </Box>
             </Flex>
           </Box>
-          <Divider mb={6} />
+          <Divider mb={6} borderColor="" opacity="40%" />
           <Container
             className="scrollbar"
             padding="0px"
@@ -138,20 +157,31 @@ export default function ModalForQuestion({
             overflowY="auto"
             bgColor={colorMode === "dark" ? "#14181e60" : "transparent"}
             border={colorMode === "dark" ? "none" : "1px solid black"}
-            borderRadius="10px"
+            borderRadius="5px"
           >
             <Heading
               size="md"
-              mb={2}
-              color="gray.100"
+              color={colorMode === "dark" ? "white" : "black"}
               position="sticky"
               top={0}
               zIndex={1}
               bgColor={colorMode === "dark" ? "#232b38" : "white"}
               padding="8px"
+              paddingBottom="4px"
             >
               Perguntas Encontradas:
             </Heading>
+            <Box
+              position="sticky"
+              top="34px"
+              height="15px"
+              bgGradient={
+                colorMode === "dark"
+                  ? "linear(to-b, #232b38, transparent)"
+                  : "linear(to-b, white, transparent)"
+              }
+              zIndex={0}
+            />
             <Stack spacing={4}>
               {questionFiltred?.map((feedback, index) => (
                 <Box
@@ -161,7 +191,7 @@ export default function ModalForQuestion({
                   marginTop="0px"
                   borderWidth="1px"
                   borderRadius="lg"
-                  bg={index % 2 === 0 ? "gray.50" : "gray.100"}
+                  bg="gray.200"
                   boxShadow="sm"
                 >
                   <Stack
@@ -179,7 +209,11 @@ export default function ModalForQuestion({
                       <Text fontSize="lg" fontWeight="semibold" color="black">
                         {feedback.questions[index]?.questionName}
                       </Text>
-                      <Tag bg="black" colorScheme="green" fontWeight="bold">
+                      <Tag
+                        bg={colorMode === "dark" ? "black" : "#9ae6b4"}
+                        color={colorMode === "dark" ? "#9ae6b4" : "black"}
+                        fontWeight="bold"
+                      >
                         Nota: {feedback.questions[index]?.rating}
                       </Tag>
                     </Box>

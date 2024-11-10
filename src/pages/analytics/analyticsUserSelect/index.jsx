@@ -18,6 +18,8 @@ import {
 } from "pages/analytics/components/boxInformations";
 import CartesianChart from "../components/grafics/cartesianChart";
 import BoxObservations from "../components/boxObservations";
+import FavorationGrafic from "./components/grafics/favorationGrafic";
+import AverageQuestions from "../components/grafics/averageQuestions";
 
 function AnalyticsUserSelect() {
   const location = useLocation();
@@ -56,7 +58,7 @@ function AnalyticsUserSelect() {
           (feedback) => feedback.reviewed === user
         );
         setUserFeedbacks(filteredUserFeedbacks);
-        console.log(filteredUserFeedbacks)
+        console.log(filteredUserFeedbacks);
         averageAvaliationsFeedbacks(filteredUserFeedbacks);
       }
     } catch (error) {
@@ -70,7 +72,6 @@ function AnalyticsUserSelect() {
     findParticipants();
     initializeData.current = true;
   }
-  
 
   return (
     <>
@@ -192,33 +193,19 @@ function AnalyticsUserSelect() {
           <Container
             marginTop="15px"
             minWidth="100%"
-            minHeight="367px"
+            minHeight="467px"
             padding="0px"
             alignItems="center"
             display="grid"
             gridTemplateColumns="repeat(2, 2fr)"
           >
-            <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={userFeedbacks}/>
-            <Container marginRight="60px">
-              <Container
-                bgColor="#2b3442"
-                borderRadius="10px"
-                minHeight="200px"
-                padding="20px"
-                mb="30px"
-                display="flex"
-              >
-                <Heading color="white">Gráfico 1</Heading>
-              </Container>
-              <Container
-                bgColor="#2b3442"
-                borderRadius="10px"
-                minHeight="233px"
-                padding="20px"
-                display="flex"
-              >
-                <Heading color="white">Gráfico 2</Heading>
-              </Container>
+            <CartesianChart
+              notes={groupSelected?.numberOfStars}
+              feedbacks={userFeedbacks}
+            />
+            <Container marginRight="60px" marginTop="-240px">
+              <AverageQuestions feedbacks={userFeedbacks} title={"Médias de notas por questão para " + formattingFirstName(matchedUser?.name)}/>
+              <FavorationGrafic feedbacks={userFeedbacks} notes={groupSelected?.numberOfStars}/>
             </Container>
           </Container>
           <Container
@@ -234,10 +221,12 @@ function AnalyticsUserSelect() {
               padding="0px"
               paddingLeft="15px"
               paddingRight="15px"
-              marginTop="50px"
+              marginTop="10px"
               marginBottom="15px"
             >
-              <Heading>Comentários para {formattingFirstName(matchedUser?.name)}:</Heading>
+              <Heading>
+                Comentários para {formattingFirstName(matchedUser?.name)}:
+              </Heading>
             </Container>
             <Container minWidth="100%" minHeight="90%" gap="20px">
               <BoxObservations feedbacks={userFeedbacks} />
