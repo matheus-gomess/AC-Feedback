@@ -1,4 +1,4 @@
-const { extendTheme } = require("@chakra-ui/react");
+import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   config: {

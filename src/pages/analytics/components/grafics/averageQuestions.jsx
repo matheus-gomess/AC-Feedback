@@ -16,19 +16,18 @@ export default function AverageQuestions({ feedbacks, title }) {
   const [averageRatingsByQuestion, setAverageRatingsByQuestion] = useState([]);
   const [progress, setProgress] = useState(100);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedQuestion, setSelectedQuestion] = useState(null)
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sliderRef = useRef(null);
-
   const handleOpen = (group) => {
     setIsModalOpen(true);
-    setSelectedQuestion(group)
+    setSelectedQuestion(group);
   };
 
   const handleClose = () => {
     setIsModalOpen(false);
     setSelectedQuestion(null);
-  }
+  };
 
   useEffect(() => {
     const calculateAverageRatingsByQuestion = (feedbacks) => {
@@ -106,102 +105,141 @@ export default function AverageQuestions({ feedbacks, title }) {
   }, [currentIndex]);
 
   return (
-    <Container
-      bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
-      borderRadius="10px"
-      border="1px solid"
-      borderColor={colorMode === "dark" ? "transparent" : "black"}
-      minHeight="200px"
-      padding="20px"
-      paddingBottom="0px"
-      mb="30px"
-      display="flex"
-      flexDirection="column"
-    >
-      <Text fontSize="1.4rem" mb="10px">
-        <strong>{title}</strong>
-      </Text>
+    <>
+      {feedbacks.length === 0 ? (
+        <Container
+          bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
+          borderRadius="10px"
+          border="1px solid"
+          borderColor={colorMode === "dark" ? "transparent" : "black"}
+          minHeight="200px"
+          padding="20px"
+          paddingBottom="0px"
+          mb="30px"
+          display="flex"
+          flexDirection="column"
+        >
+          <Text fontSize="1.4rem" mb="10px">
+            <strong>{title}</strong>
+          </Text>
+          <Box
+            paddingLeft="20px"
+            paddingRight="20px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="135px"
+          >
+            <Heading color="#808080">Nenhuma Questão</Heading>
+          </Box>
+        </Container>
+      ) : (
+        <Container
+          bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
+          borderRadius="10px"
+          border="1px solid"
+          borderColor={colorMode === "dark" ? "transparent" : "black"}
+          minHeight="200px"
+          padding="20px"
+          paddingBottom="0px"
+          mb="30px"
+          display="flex"
+          flexDirection="column"
+        >
+          <Text fontSize="1.4rem" mb="10px">
+            <strong>{title}</strong>
+          </Text>
 
-      <Box
-        paddingLeft="20px"
-        paddingRight="20px"
-        position="relative"
-        height="135px"
-      >
-        <Slider ref={sliderRef} {...settings}>
-          {averageRatingsByQuestion.map((question) => (
-            <Box
-              key={question.questionName}
-              height="130px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minWidth="100%"
-              position="relative"
-              onClick={() => {
-                handleOpen(question)
-              }}
-              cursor="pointer"
-            >
-              <Box textAlign="center">
-                <Heading>{question.questionName}</Heading>
-                <Text fontSize="1.2rem">Média: {question.averageRating}</Text>
-              </Box>
-            </Box>
-          ))}
-        </Slider>
+          <Box
+            paddingLeft="20px"
+            paddingRight="20px"
+            position="relative"
+            height="135px"
+          >
+            <Slider ref={sliderRef} {...settings}>
+              {averageRatingsByQuestion.map((question) => (
+                <Box
+                  key={question.questionName}
+                  height="130px"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minWidth="100%"
+                  position="relative"
+                  onClick={() => {
+                    handleOpen(question);
+                  }}
+                  cursor="pointer"
+                >
+                  <Box textAlign="center">
+                    <Heading>{question.questionName}</Heading>
+                    <Text fontSize="1.2rem">
+                      Média: {question.averageRating}
+                    </Text>
+                  </Box>
+                </Box>
+              ))}
+            </Slider>
 
-        {averageRatingsByQuestion.length > 1 ? (
-          <>
-            <IconButton
-              icon={<ChevronLeftIcon fontSize={25} />}
-              aria-label="Previous Slide"
-              position="absolute"
-              top="30%"
-              left="10px"
-              transform="translateY(-50%)"
-              onClick={() => {
-                sliderRef.current.slickPrev();
-                setProgress(-2.5);
-              }}
-              zIndex={2}
-              borderRadius="full"
-            />
-            <IconButton
-              icon={<ChevronRightIcon fontSize={25} />}
-              aria-label="Next Slide"
-              position="absolute"
-              top="30%"
-              right="10px"
-              transform="translateY(-50%)"
-              onClick={() => {
-                sliderRef.current.slickNext();
-                setProgress(-2.5);
-              }}
-              zIndex={2}
-              borderRadius="full"
-            />
-            <Box
-              position="absolute"
-              bottom="30px"
-              left="30px"
-              borderRadius="20px"
-              width="100px"
-              height="5px"
-              backgroundColor="gray.300"
-            >
-              <Box
-                height="100%"
-                width={`${100 - progress}%`}
-                borderRadius="20px"
-                backgroundColor="#971520"
-                transition="width 0.1s linear"
-              />
-            </Box>
-          </>
-        ) : null}
-
-        <style>{`
+            {averageRatingsByQuestion.length > 1 ? (
+              <>
+                <IconButton
+                  icon={<ChevronLeftIcon fontSize={25} />}
+                  aria-label="Previous Slide"
+                  position="absolute"
+                  top="30%"
+                  left="10px"
+                  transform="translateY(-50%)"
+                  onClick={() => {
+                    sliderRef.current.slickPrev();
+                    setProgress(-2.5);
+                  }}
+                  zIndex={2}
+                  borderRadius="full"
+                />
+                <IconButton
+                  icon={<ChevronRightIcon fontSize={25} />}
+                  aria-label="Next Slide"
+                  position="absolute"
+                  top="30%"
+                  right="10px"
+                  transform="translateY(-50%)"
+                  onClick={() => {
+                    sliderRef.current.slickNext();
+                    setProgress(-2.5);
+                  }}
+                  zIndex={2}
+                  borderRadius="full"
+                />
+                <Box
+                  position="absolute"
+                  bottom="30px"
+                  left="30px"
+                  borderRadius="20px"
+                  width="100px"
+                  height="5px"
+                  backgroundColor="gray.300"
+                >
+                  <Box
+                    height="100%"
+                    width={`${100 - progress}%`}
+                    borderRadius="20px"
+                    backgroundColor="#971520"
+                    transition="width 0.1s linear"
+                  />
+                </Box>
+              </>
+            ) : null}
+          </Box>
+          <ModalForQuestion
+            question={selectedQuestion}
+            feedbacks={feedbacks}
+            isOpen={isModalOpen}
+            handleClose={handleClose}
+          />
+        </Container>
+      )}
+      <style>{`
           .slick-dots li button:before {
             color: ${colorMode === "dark" ? "white" : "black"};
             opacity: 0.5;
@@ -212,8 +250,6 @@ export default function AverageQuestions({ feedbacks, title }) {
             opacity: 1;
           }
         `}</style>
-      </Box>
-      <ModalForQuestion question={selectedQuestion} feedbacks={feedbacks} isOpen={isModalOpen} handleClose={handleClose}/>
-    </Container>
+    </>
   );
 }
