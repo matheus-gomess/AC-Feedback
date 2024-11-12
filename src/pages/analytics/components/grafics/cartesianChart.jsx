@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div style={{ backgroundColor: "transparent", padding: "10px", border: colorMode === "dark" ? "1px solid white" : "1px solid black" }}>
         <p>{`${label}`}</p>
-        <p>{`Média: ${payload[0].value}`}</p>
+        <p>{`Média: ${payload[0].value.toFixed(2)}`}</p>
       </div>
     );
   }
@@ -31,17 +31,14 @@ export default function CartesianChart({ notes, feedbacks }) {
 
   useEffect(() => {
     const grouped = feedbacks.reduce((acc, feedback) => {
-      const date = feedback.date.split("T")[0]; // Extrai a data
+      const date = feedback.date.split("T")[0];
 
-      // Inicializa os valores para a data se não existirem
       if (!acc[date]) {
         acc[date] = { total: 0, count: 0 };
       }
 
-      // Extrai as avaliações e atualiza a soma e a contagem
       feedback.questions.forEach((question) => {
         if (question.rating) {
-          // Verifica se a avaliação existe
           acc[date].total += question.rating;
           acc[date].count += 1;
         }
@@ -50,14 +47,13 @@ export default function CartesianChart({ notes, feedbacks }) {
       return acc;
     }, {});
 
-    // Converte o objeto em um array com médias
     const averages = Object.keys(grouped).map((date) => ({
       name: format(parseISO(date), "dd/MM/yy"),
       Ideal: notes,
       Notas: grouped[date].count
         ? grouped[date].total / grouped[date].count
         : 0,
-      date: (date), // Adiciona a data original para ordenação
+      date: (date),
     }));
 
     setGroupedFeedbacks(averages);
