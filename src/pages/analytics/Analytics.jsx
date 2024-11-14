@@ -1,13 +1,6 @@
-import {
-  Container,
-  Heading,
-  Text,
-  Input,
-  Select,
-} from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { printQuestionSet } from "services/questionsSet";
-import { getAddedFeedbacks } from "services/feedbacks";
+import { Container, Heading, Text, Input, Select } from "@chakra-ui/react";
+import { useState, useEffect, useRef } from "react";
+import { getActivatedGroup, printQuestionSet } from "services/questionsSet";
 import PrincipalSpinner from "components/Spinner";
 import {
   BoxAverage,
@@ -18,91 +11,81 @@ import CartesianChart from "./components/grafics/cartesianChart";
 import BoxObservations from "./components/boxObservations";
 import AverageUsers from "./components/grafics/averageUsers";
 import AverageQuestions from "./components/grafics/averageQuestions";
+import { getGroupAnalytics } from "services/analytics";
+import { format } from "date-fns";
 
 export default function Analytics() {
   const [groupSelected, setGroupSelected] = useState(null);
-  const [allFeedbacks, setAllFeedbacks] = useState([]);
-  const [filtredFeedbacks, setFiltredFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [average, setAverage] = useState();
+  const initializeRef = useRef(false);
+  const [groupAPI, setGroupAPI] = useState([]);
+  const today = format(new Date(), "dd/MM/yyyy");
 
   useEffect(() => {
+    const fetchActivatedGroup = async () => {
+      try {
+        const activatedGroup = await getActivatedGroup();
+        setGroupSelected(activatedGroup);
+      } catch (error) {
+        console.error("Erro ao buscar o grupo ativo:", error);
+      }
+    };
     const fetchGroups = async () => {
       try {
         const response = await printQuestionSet();
         setGroups(response.questions);
-        const activatedGroup = response.questions.find(
-          (group) => group.activatedSet === true
-        );
-        setGroupSelected(activatedGroup);
       } catch (error) {
         console.error(error);
       }
     };
     fetchGroups();
+    fetchActivatedGroup();
   }, []);
 
-  useEffect(() => {
-    const fetchFeedbacks = async () => {
+  async function getGroup(group, endDate) {
+    try {
+      const response = await getGroupAnalytics(group?.id, endDate);
+      setGroupAPI(response);
+      setUsers(response?.reviewedUsers);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (groupSelected) {
+    const initializeData = async () => {
       try {
-        const response = await getAddedFeedbacks();
-        setAllFeedbacks(response.addedFeedbacks);
+        await getGroup(groupSelected, today);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchFeedbacks();
-  }, []);
 
-  useEffect(() => {
-    if (groupSelected && allFeedbacks.length >= 0) {
-      const filtring = allFeedbacks.filter(
-        (feedback) => groupSelected.questionSetName === feedback.questionSetName
-      );
-      setFiltredFeedbacks(filtring);
-
-      function listUsersReviewed() {
-        const usersReviewed = filtring
-          .map((feedback) => feedback.reviewed)
-          .flat();
-        const uniqueUsers = [...new Set(usersReviewed)];
-        setUsers(uniqueUsers);
-      }
-
-      function averageAvaliationsFeedbacks() {
-        let ratings = 0;
-        let questions = 0;
-
-        filtring.forEach((feedback) => {
-          feedback.questions.forEach((question) => {
-            ratings += question.rating;
-            questions++;
-          });
-          questions--;
-        });
-
-        setAverage(questions > 0 ? (ratings / questions).toFixed(2) : 0);
-      }
-      listUsersReviewed();
-      averageAvaliationsFeedbacks();
-      setLoading(false);
+    if (!initializeRef.current) {
+      initializeData();
+      initializeRef.current = true;
     }
-  }, [groupSelected, allFeedbacks]);
+  }
 
   const newGroupFiltred = async (selectedGroupId) => {
     try {
-      const response = await printQuestionSet();
-      const filtringFeedbacks = response.questions.find(
-        (group) => group.id === selectedGroupId
-      );
-      if (filtringFeedbacks) {
-        setGroupSelected(filtringFeedbacks);
-      }
+      const response = await getGroupAnalytics(selectedGroupId, today);
+      setGroupAPI(response);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
+  };
+
+  const calculateAverageRating = () => {
+    const ratings = groupAPI?.ratingsOfAllAnsweredFeedbacks || [];
+    const totalRatings = ratings.length;
+    const sumRatings = ratings.reduce((acc, rating) => acc + rating, 0);
+    return totalRatings > 0 ? (sumRatings / totalRatings).toFixed(2) : "0";
   };
 
   return (
@@ -132,7 +115,7 @@ export default function Analytics() {
                 fontSize="1.875rem"
                 fontWeight="400"
                 focusBorderColor="transparent"
-                value={groupSelected?.id}
+                value={groupAPI?.selectedGroup?.id}
                 onChange={(e) => {
                   newGroupFiltred(e.target.value);
                 }}
@@ -167,25 +150,29 @@ export default function Analytics() {
           >
             <BoxInfoNumbers
               title={
-                groupSelected &&
-                "Feedbacks criados no " + groupSelected.questionSetName
+                groupAPI &&
+                "Feedbacks criados no " + groupAPI?.selectedGroup?.name
               }
-              number={filtredFeedbacks.length}
+              number={groupAPI?.numberOfRealizedFeedbacks}
               detailText={
-                filtredFeedbacks.length !== 0
-                  ? filtredFeedbacks.length === 1
+                groupAPI?.numberOfRealizedFeedbacks !== 0
+                  ? groupAPI?.numberOfRealizedFeedbacks === 1
                     ? "Feedback"
                     : "Feedbacks"
                   : "Nenhum Feedback"
               }
             />
             <BoxAverage
-              average={average + " de " + groupSelected?.numberOfStars}
+              average={
+                calculateAverageRating() +
+                " de " +
+                groupAPI?.selectedGroup?.numberOfStars
+              }
               description={"Média de todas as notas do grupo"}
             />
             <BoxInfoLists
               users={users}
-              filtredFeedbacks={filtredFeedbacks}
+              group={groupAPI}
               groupSelected={groupSelected}
             />
           </Container>
@@ -198,10 +185,16 @@ export default function Analytics() {
             display="grid"
             gridTemplateColumns="repeat(2, 2fr)"
           >
-            <CartesianChart notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
+            <CartesianChart feedbacks={groupAPI.graphData} />
             <Container marginRight="60px">
-              <AverageQuestions feedbacks={filtredFeedbacks} title="Médias de notas por questão"/>
-              <AverageUsers notes={groupSelected?.numberOfStars} feedbacks={filtredFeedbacks}/>
+              <AverageQuestions
+                feedbacks={groupAPI.notesOfAnsweredQuestions}
+                title="Médias de notas por questão"
+              />
+              <AverageUsers
+                notes={groupAPI?.selectedGroup?.numberOfStars}
+                feedbacks={groupAPI?.sendedNotesPerUser}
+              />
             </Container>
           </Container>
           <Container
@@ -220,7 +213,7 @@ export default function Analytics() {
               <Heading>Comentários:</Heading>
             </Container>
             <Container minWidth="100%" minHeight="90%" gap="20px">
-              <BoxObservations feedbacks={filtredFeedbacks} />
+              <BoxObservations feedbacks={groupAPI?.realizedObservations} />
             </Container>
           </Container>
         </>

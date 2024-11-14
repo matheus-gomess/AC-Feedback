@@ -7,19 +7,17 @@ import {
   useColorMode,
   Box,
 } from "@chakra-ui/react";
-import { parseISO, format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { formattingName } from "utils/formattingTexts";
 
 export default function BoxObservations({ feedbacks }) {
   const { colorMode } = useColorMode();
   const [showAll, setShowAll] = useState(false);
 
-  const visibleFeedbacks = showAll ? feedbacks : feedbacks.slice(0, 3);
+  const visibleFeedbacks = showAll ? feedbacks && feedbacks : feedbacks?.slice(0, 3);
 
   return (
     <>
-      {visibleFeedbacks.length > 0
+      {visibleFeedbacks?.length > 0
         ? visibleFeedbacks?.map((feedback, index) => (
             <Container
               key={index}
@@ -44,7 +42,7 @@ export default function BoxObservations({ feedbacks }) {
                 color={colorMode === "dark" ? "white" : "black"}
               >
                 "
-                {feedback.questions[feedback.questions.length - 1]?.observation}
+                {feedback.observation}
                 "
               </Heading>
               <Text color="#808080" fontSize="18px" marginTop="10px">
@@ -53,9 +51,7 @@ export default function BoxObservations({ feedbacks }) {
 
               <Box position="absolute" bottom="10px" right="20px">
                 <Text color="#808080">
-                  {format(parseISO(feedback?.date), "dd/MM/yyyy, HH:mm", {
-                    locale: ptBR,
-                  })}
+                  {feedback?.date}
                 </Text>
               </Box>
             </Container>
@@ -64,7 +60,7 @@ export default function BoxObservations({ feedbacks }) {
 
       {showAll
         ? null
-        : feedbacks.length > 3 && (
+        : feedbacks?.length > 3 && (
             <Box display="flex" justifyContent="center">
               <Button
                 marginLeft="40px"

@@ -10,11 +10,10 @@ import {
 } from "recharts";
 import { Box, Heading, useColorMode } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { format, parseISO } from "date-fns";
 
 const CustomTooltip = ({ active, payload, label }) => {
   const { colorMode } = useColorMode();
-  if (active && payload) {
+  if (active && payload && payload.length) {
     return (
       <div style={{ backgroundColor: "transparent", padding: "10px", border: colorMode === "dark" ? "1px solid white" : "1px solid black" }}>
         <p>{`${label}`}</p>
@@ -25,48 +24,32 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function CartesianChart({ notes, feedbacks }) {
+export default function CartesianChart({ feedbacks }) {
   const { colorMode } = useColorMode();
   const [groupedFeedbacks, setGroupedFeedbacks] = useState([]);
 
   useEffect(() => {
-    const grouped = feedbacks.reduce((acc, feedback) => {
-      const date = feedback.date.split("T")[0];
-
-      if (!acc[date]) {
-        acc[date] = { total: 0, count: 0 };
-      }
-
-      feedback.questions.forEach((question) => {
-        if (question.rating) {
-          acc[date].total += question.rating;
-          acc[date].count += 1;
-        }
-      });
-
-      return acc;
-    }, {});
-
-    const averages = Object.keys(grouped).map((date) => ({
-      name: format(parseISO(date), "dd/MM/yy"),
-      Ideal: notes,
-      Notas: grouped[date].count
-        ? grouped[date].total / grouped[date].count
-        : 0,
-      date: (date),
-    }));
+    const averages = feedbacks?.map((feedback) => {
+      const total = feedback?.notes.reduce((sum, note) => sum + note, 0);
+      const count = feedback?.notes.length;
+      return {
+        name: feedback.date,
+        Ideal: feedback?.maxRating,
+        Notas: count ? total / count : 0,
+      };
+    });
 
     setGroupedFeedbacks(averages);
-  }, [feedbacks, notes]);
+  }, [feedbacks]);
 
-  const ticks = Array.from({ length: notes + 1 }, (_, i) => i);
+  const ticks = feedbacks && Array.from({ length: feedbacks[0]?.maxRating + 1 || 1 }, (_, i) => i);
 
-  return groupedFeedbacks.length > 0 ? (
+  return groupedFeedbacks?.length > 0 ? (
     <ResponsiveContainer width="120%" height="100%">
       <ComposedChart
         width={500}
         height={200}
-        data={groupedFeedbacks.sort((a, b) => new Date(a.date) - new Date(b.date))}
+        data={groupedFeedbacks}
       >
         <XAxis
           dataKey="name"
@@ -74,10 +57,10 @@ export default function CartesianChart({ notes, feedbacks }) {
         />
         <YAxis
           stroke={colorMode === "dark" ? "white" : "black"}
-          domain={[0, notes]}
+          domain={[0, feedbacks[0]?.maxRating]}
           ticks={ticks}
         />
-        <Tooltip content={<CustomTooltip />}/>
+        <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Area dataKey="Notas" fill="#86111c" stroke="#971520" />
         <Line dataKey="Ideal" stroke="#9d9d9d" />

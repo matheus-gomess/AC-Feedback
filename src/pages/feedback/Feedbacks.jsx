@@ -6,7 +6,7 @@ import {
   Select,
   useColorMode,
   Tooltip,
-  Icon
+  Icon,
 } from "@chakra-ui/react";
 import SubmittedAvaliation from "../rate/components/submittedAvaliations";
 import { useRef, useState } from "react";
@@ -108,22 +108,22 @@ export default function Feedbacks() {
     }
   };
 
-const initializeData = async () => {
-      try {
-        await fetchData();
-        await findParticipants();
+  const initializeData = async () => {
+    try {
+      await fetchData();
+      await findParticipants();
 
-        userFeedbacksReceived(user.name);
-        userFeedbacksAdded(user.name);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    if (!initializeRef.current) {
-      initializeData();
-      initializeRef.current = true; // Marcar como executado
+      userFeedbacksReceived(user.name);
+      userFeedbacksAdded(user.name);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  if (!initializeRef.current) {
+    initializeData();
+    initializeRef.current = true; // Marcar como executado
+  }
 
   //Função controlando a fechura do filtro de grupos
   const handleCloseGroupFilter = () => {
@@ -162,7 +162,7 @@ const initializeData = async () => {
         minHeight: "90vh",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       {verifyAdm ? (
@@ -219,7 +219,7 @@ const initializeData = async () => {
             height: "75px",
             background: colorGradientBackGround,
             borderBottomRadius: "20px",
-            pointerEvents: "none"
+            pointerEvents: "none",
           }}
         >
           <Container
@@ -252,7 +252,7 @@ const initializeData = async () => {
                       key={user.name}
                       value={user.name}
                       style={{
-                        color: colorMode === "dark" ? "white" : "black"
+                        color: colorMode === "dark" ? "white" : "black",
                       }}
                     >
                       Você
@@ -262,7 +262,7 @@ const initializeData = async () => {
                         key={user.name}
                         value={user.name}
                         style={{
-                          color: colorMode === "dark" ? "white" : "black"
+                          color: colorMode === "dark" ? "white" : "black",
                         }}
                       >
                         {formattingName(user.name)}
@@ -316,7 +316,7 @@ const initializeData = async () => {
                     <option
                       value={""}
                       style={{
-                        color: colorMode === "dark" ? "white" : "black"
+                        color: colorMode === "dark" ? "white" : "black",
                       }}
                     >
                       Todos
@@ -326,7 +326,7 @@ const initializeData = async () => {
                         key={user.name}
                         value={user.name}
                         style={{
-                          color: colorMode === "dark" ? "white" : "black"
+                          color: colorMode === "dark" ? "white" : "black",
                         }}
                       >
                         {formattingName(user.name)}
@@ -428,7 +428,7 @@ const initializeData = async () => {
             height: "75px",
             background: colorGradientBackGround,
             borderBottomRadius: "20px",
-            pointerEvents: "none"
+            pointerEvents: "none",
           }}
         >
           <Container
@@ -461,7 +461,7 @@ const initializeData = async () => {
                       key={user.name}
                       value={user.name}
                       style={{
-                        color: colorMode === "dark" ? "white" : "black"
+                        color: colorMode === "dark" ? "white" : "black",
                       }}
                     >
                       Você
@@ -471,7 +471,7 @@ const initializeData = async () => {
                         key={user.name}
                         value={user.name}
                         style={{
-                          color: colorMode === "dark" ? "white" : "black"
+                          color: colorMode === "dark" ? "white" : "black",
                         }}
                       >
                         {formattingName(user.name)}

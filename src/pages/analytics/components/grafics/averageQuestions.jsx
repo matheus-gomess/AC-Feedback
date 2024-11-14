@@ -19,6 +19,7 @@ export default function AverageQuestions({ feedbacks, title }) {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sliderRef = useRef(null);
+
   const handleOpen = (group) => {
     setIsModalOpen(true);
     setSelectedQuestion(group);
@@ -35,25 +36,22 @@ export default function AverageQuestions({ feedbacks, title }) {
 
       feedbacks?.forEach((feedback) => {
         feedback.questions.forEach((question) => {
-          if (question.questionType === "RATING" && question.rating !== null) {
+          if (question.questionName && question.rating !== null) {
             const { questionName, rating } = question;
 
-            if (questionRatings[questionName]) {
-              questionRatings[questionName].sum += rating;
-              questionRatings[questionName].count += 1;
-            } else {
-              questionRatings[questionName] = { sum: rating, count: 1 };
+            if (!questionRatings[questionName]) {
+              questionRatings[questionName] = { sum: 0, count: 0 };
             }
+            questionRatings[questionName].sum += rating;
+            questionRatings[questionName].count += 1;
           }
         });
       });
 
-      return Object.entries(questionRatings).map(
-        ([questionName, { sum, count }]) => ({
-          questionName,
-          averageRating: parseFloat((sum / count).toFixed(2)),
-        })
-      );
+      return Object.entries(questionRatings).map(([questionName, { sum, count }]) => ({
+        questionName,
+        averageRating: parseFloat((sum / count).toFixed(2)),
+      }));
     };
 
     const averages = calculateAverageRatingsByQuestion(feedbacks);

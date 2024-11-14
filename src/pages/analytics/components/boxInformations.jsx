@@ -85,7 +85,7 @@ export function BoxAverage({ average, description }) {
   );
 }
 
-export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
+export function BoxInfoLists({ users, filtredFeedbacks, group }) {
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
 
@@ -94,7 +94,7 @@ export function BoxInfoLists({ users, filtredFeedbacks, groupSelected }) {
       state: {
         user,
         filtredFeedbacks,
-        groupSelected,
+        group,
       },
     });
   };

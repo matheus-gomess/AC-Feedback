@@ -10,49 +10,23 @@ import {
 } from "recharts";
 import { formattingFirstName } from "utils/formattingTexts";
 
-export default function AverageUsers({ notes, feedbacks }) {
+export default function AverageUsers({ feedbacks, notes }) {
   const { colorMode } = useColorMode();
+
+  // Função para calcular a média das notas de cada usuário
   const calculateAverageRatings = (feedbacks) => {
-    const userRatings = {};
-
-    feedbacks.forEach((feedback) => {
-      const { reviewed, questions } = feedback;
-      const formattedName = formattingFirstName(reviewed);
-
-      const ratings = questions
-        .filter(
-          (question) =>
-            question.questionType === "RATING" && question.rating !== null
-        )
-        .map((question) => question.rating);
-
-      if (ratings.length > 0) {
-        const totalRating = ratings.reduce((acc, rating) => acc + rating, 0);
-
-        if (userRatings[formattedName]) {
-          userRatings[formattedName].sum += totalRating;
-          userRatings[formattedName].count += ratings.length;
-        } else {
-          userRatings[formattedName] = {
-            sum: totalRating,
-            count: ratings.length,
-          };
-        }
-      }
+    return feedbacks?.map(({ reviewed, notes }) => {
+      const sum = notes.reduce((acc, note) => acc + note, 0);
+      const average = parseFloat((sum / notes.length).toFixed(2)); // Média com 2 casas decimais
+      return { name: formattingFirstName(reviewed), Média: average };
     });
-
-    return Object.entries(userRatings).map(([name, { sum, count }]) => ({
-      name,
-      Média: parseFloat((sum / count).toFixed(2)),
-    }));
   };
 
   const data = calculateAverageRatings(feedbacks);
 
-  const ticks = Array.from({ length: notes + 1 }, (_, i) => i);
   return (
     <>
-      {feedbacks.length === 0 ? (
+      {feedbacks?.length === 0 ? (
         <Container
           bgColor={colorMode === "dark" ? "#2b3442" : "transparent"}
           borderRadius="10px"
@@ -106,8 +80,7 @@ export default function AverageUsers({ notes, feedbacks }) {
               />
               <YAxis
                 stroke={colorMode === "dark" ? "white" : "black"}
-                domain={[0, notes]}
-                ticks={ticks}
+                domain={[0, notes]} // Definindo o limite máximo da Y para 5
               />
               <Tooltip
                 cursor={{
